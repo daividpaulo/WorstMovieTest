@@ -14,12 +14,6 @@ public final class  CsvUtil {
 
 	  public static <T> List<T> loadObjectList(Class<T> type, String fileName) {
 		    try {
-		    
-		    	/*CsvSchema bootstrapSchema = CsvSchema.emptySchema()
-		    			                             .withHeader()
-		    			                             .withColumnSeparator(';')
-		    			                             .withArrayElementSeparator(',');*/
-		    	
 		    	
 		    	CsvSchema bootstrapSchema =
 		    			CsvSchema.builder()

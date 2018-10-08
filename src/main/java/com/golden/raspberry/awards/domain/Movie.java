@@ -2,18 +2,22 @@ package com.golden.raspberry.awards.domain;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 @Data
+@Component
 public class Movie {
 
-	private Long id;
+	public String year;
 	
-	private int year;
+	public String title;
 	
-	private String title;
+	public String[] studios;
 	
-	private List<Studio> studios; 
+	public String[] producers;
 	
-	private boolean winner;
+	public String winner;
+
 }
