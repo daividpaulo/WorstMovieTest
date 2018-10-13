@@ -26,7 +26,6 @@ public final class  CsvUtil {
 		    				.withColumnSeparator(';')
 		    				.withHeader();
 		    			                             
-		    			                             
 		        
 		    	CsvMapper mapper = new CsvMapper();
 		        
@@ -35,12 +34,10 @@ public final class  CsvUtil {
 		        MappingIterator<T> readValues = 
 		        mapper.reader(type).with(bootstrapSchema).readValues(file);
 		        
-		      
-		        
+		       
 		        return readValues.readAll();
 		    
 		    } catch (Exception e) {
-		        //logger.error("Error occurred while loading object list from file " + fileName, e);
 		        return Collections.emptyList();
 		    }
 		}  

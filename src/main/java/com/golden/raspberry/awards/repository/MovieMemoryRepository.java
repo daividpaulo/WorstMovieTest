@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.golden.raspberry.awards.domain.Movie;
 
 
-@Component
+@Repository
 public class MovieMemoryRepository implements IMovieMemoryRepository {
 
 	private static List<Movie> database = new ArrayList<Movie>();
@@ -40,6 +41,26 @@ public class MovieMemoryRepository implements IMovieMemoryRepository {
 	@Override
 	public List<Movie> getAll() {
 		return this.database;
+	}
+
+
+	@Override
+	public List<Movie> getWinnerMoviesByYear(int year) {
+		
+		return this.database.stream()
+				            .filter(x-> x.isWinner() && x.getYear()==year)
+				            .collect(Collectors.toList());
+		
+	}
+
+
+	@Override
+	public List<Movie> getAllWinnerMovies() {
+		
+		return this.database.stream()
+	            .filter(x-> x.isWinner())
+	            .collect(Collectors.toList());
+
 	}
 	
 

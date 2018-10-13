@@ -12,6 +12,10 @@ public interface IMovieMemoryRepository {
 	public void save(List<Movie> domainMovies);
 
 	public List<Movie> getAll();
+
+	public List<Movie> getWinnerMoviesByYear(int year);
+
+	public List<Movie> getAllWinnerMovies();
 	
 	
 	
