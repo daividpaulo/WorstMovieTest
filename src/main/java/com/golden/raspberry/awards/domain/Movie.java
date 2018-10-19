@@ -1,39 +1,49 @@
 package com.golden.raspberry.awards.domain;
 
 
+import java.util.List;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
-
-
-
 
 @Component
 public class Movie {
 
+	private int id;
+	
 	private Integer year;
 	
 	private String title;
 	
-	private String[] studios;
+	private List<String> studios;
 	
-	private String[] producers;
+	private List<String> producers;
 	
 	private boolean winner;
-
 
 	public Movie() {
 		
 	}
 	
-	public Movie(Integer year, String title, String[] studios, String[] producers, boolean winner) {
+	public Movie(int id,Integer year, String title, List<String> studios, List<String> producers, boolean winner) {
 		super();
+		this.id=id;
 		this.year = year;
-		this.title = title;
+		this.title = title.trim();
 		this.studios = studios;
 		this.producers = producers;
 		this.winner = winner;
 	}
-
 	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Integer getYear() {
 		return year;
 	}
@@ -50,19 +60,19 @@ public class Movie {
 		this.title = title;
 	}
 
-	public String[] getStudios() {
+	public List<String> getStudios() {
 		return studios;
 	}
 
-	public void setStudios(String[] studios) {
+	public void setStudios(List<String> studios) {
 		this.studios = studios;
 	}
 
-	public String[] getProducers() {
+	public List<String> getProducers() {
 		return producers;
 	}
 
-	public void setProducers(String[] producers) {
+	public void setProducers(List<String> producers) {
 		this.producers = producers;
 	}
 

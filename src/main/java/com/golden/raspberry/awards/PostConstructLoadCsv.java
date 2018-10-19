@@ -40,7 +40,7 @@ public class PostConstructLoadCsv {
 	   List<Movie> movies = new ArrayList<>();
 	   
 	   moviesReaders
-		.forEach(x-> movies.add(x.getAndConvertToMovie()));
+	    .forEach(x-> movies.add(x.getAndConvertToMovie(movies.size()+1)));
 			   					
 
 	   return movies;

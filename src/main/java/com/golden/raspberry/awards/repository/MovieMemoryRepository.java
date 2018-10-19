@@ -40,7 +40,9 @@ public class MovieMemoryRepository implements IMovieMemoryRepository {
 
 	@Override
 	public List<Movie> getAll() {
-		return this.database;
+		return this.database.stream()
+				        .filter(x->x.getId()>0)
+				        .collect(Collectors.toList());
 	}
 
 

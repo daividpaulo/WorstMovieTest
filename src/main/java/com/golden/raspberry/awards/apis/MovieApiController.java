@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.golden.raspberry.awards.domain.*;
+import com.golden.raspberry.awards.dtos.StudioDto;
 import com.golden.raspberry.awards.dtos.YearDto;
 import com.golden.raspberry.awards.services.IMovieService;
 
@@ -53,9 +54,9 @@ public class MovieApiController {
     
 	// 3. Obter a lista de estúdios, ordenada pelo número de premiações;
 	@ResponseStatus(code = HttpStatus.OK)
-	@GetMapping(path = "/studio")
-	public List<Movie> getStudios(){
-		 return null;	 
+	@GetMapping(path = "/studios")
+	public StudioDto getStudios(){
+		 return _service.getStudios();	 
 	}
 	
     
@@ -69,7 +70,7 @@ public class MovieApiController {
    
 	// 5. Excluir um filme. Não deve permitir excluir vencedores.
 	@ResponseStatus(code = HttpStatus.OK)
-    @DeleteMapping(path="/") 
+    @DeleteMapping(path="") 
 	public Movie removeMovie(Movie movie) {
     	 
     	 return null;

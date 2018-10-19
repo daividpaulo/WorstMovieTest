@@ -1,5 +1,8 @@
 package com.golden.raspberry.awards.readers;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.support.GenericTypeAwareAutowireCandidateResolver;
 
 import com.golden.raspberry.awards.domain.Movie;
@@ -20,8 +23,7 @@ public class MovieReader {
 	public String winner;
 
 	
-	public Movie getAndConvertToMovie() {
-		
-		return new Movie(year,title,studios,producers,winner.toUpperCase().trim().equals("YES"));
+	public Movie getAndConvertToMovie(int newId) {
+		return new Movie(newId,year,title,Arrays.asList(studios),Arrays.asList(producers),winner.toUpperCase().trim().equals("YES"));
 	}
 }
