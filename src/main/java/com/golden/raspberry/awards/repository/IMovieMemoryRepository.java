@@ -16,6 +16,10 @@ public interface IMovieMemoryRepository {
 	public List<Movie> getWinnerMoviesByYear(int year);
 
 	public List<Movie> getAllWinnerMovies();
+
+	public Movie getById(int id);
+
+	public void remove(Movie movie);
 	
 	
 	

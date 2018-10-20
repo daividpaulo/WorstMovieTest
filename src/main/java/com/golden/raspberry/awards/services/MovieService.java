@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.deser.std.CollectionDeserializer.CollectionReferringAccumulator;
 import com.golden.raspberry.awards.domain.Movie;
+import com.golden.raspberry.awards.dtos.IntervalDto;
+import com.golden.raspberry.awards.dtos.RangeAwardsDto;
 import com.golden.raspberry.awards.dtos.StudioDto;
 import com.golden.raspberry.awards.dtos.StudioWinnerDto;
 import com.golden.raspberry.awards.dtos.YearDto;
@@ -35,7 +37,11 @@ public class MovieService implements IMovieService {
 	
 	@Override
 	public List<Movie> getAll() {
-		return _movieRepository.getAll();
+		return _movieRepository
+				 .getAll()
+				 .stream()
+			     .sorted(Comparator.comparing(Movie::getId))
+			     .collect(Collectors.toList());
 	}
 
 
@@ -75,35 +81,24 @@ public class MovieService implements IMovieService {
 	@Override
 	public StudioDto getStudios() {
 	  
-		   List<Movie> winnerMovies = _movieRepository.getAll();
-			
-		   
+		   List<Movie> movies = _movieRepository.getAll();
 		   List<StudioWinnerDto> studios = new ArrayList<StudioWinnerDto>();
 		   
-		   
-		   for(Movie movie : winnerMovies){
-			
+		   for(Movie movie : movies){
 			   for(String actualStudio : movie.getStudios()) {
-				   
 				   if(!studios.stream().anyMatch(x->x.getName().equals(actualStudio.trim()))) {
 					   
-					   Long winCount = winnerMovies
+					   Long winCount = movies
 					     .stream()
-					     .filter(x->x.isWinner() && x.getStudios().stream().anyMatch(s->s.equalsIgnoreCase(actualStudio.trim())))
+					     .filter(x->x.isWinner() && x.getStudios().stream().anyMatch(s->s.trim().equalsIgnoreCase(actualStudio.trim())))
 					     .count();
 					   
 					   StudioWinnerDto newStudio = new StudioWinnerDto(actualStudio.trim(), winCount.intValue());     
-					   
 					   studios.add(newStudio);
 				   }
 			   }
 		   }
 		   
-		   
-		   //studios = studios
-			//	     .stream()
-				//     .sorted((o1, o2)->o1.getWinCount().compareTo(o2.getWinCount()))
-                  //   .collect(Collectors.toList());
 		   
 		   studios = studios
 			 .stream()
@@ -114,8 +109,82 @@ public class MovieService implements IMovieService {
 			
 		   
 		   return studioDto;
+	}
+
+
+	private List<String> getListDistinctProducers (List<Movie> movies){
 		
+		List<String> produces = new ArrayList<String>();
 		
+		movies
+		  .stream()
+		  .forEach(m->m.getProducers().stream().forEach(p-> produces.add(p.trim())));
+		
+		return produces.stream().distinct().collect(Collectors.toList());
+		
+	}
+	
+	
+	@Override
+	public RangeAwardsDto getBetterAndWorseProducer() {
+	
+		   List<Movie> winnersMovies = _movieRepository.getAllWinnerMovies();
+					   
+		   List<IntervalDto> intervalWins = new ArrayList<IntervalDto>();
+		   
+		   for(String actualProduce : getListDistinctProducers(winnersMovies)) {
+			
+			   List<Movie> moviesProducer = winnersMovies
+				      	                      .stream()
+					                          .filter(x-> x.getProducers().stream().anyMatch(s-> s.equalsIgnoreCase(actualProduce.trim())))
+					                          .sorted(Comparator.comparing(Movie::getYear).reversed())
+					                          .collect(Collectors.toList());
+				 
+				 IntervalDto newInteval = null; 
+				 int count = 1;
+				 
+				 for(Movie movieProducer : moviesProducer) {
+					 if(count==1) {
+						newInteval = new IntervalDto(); 
+					    newInteval.setProducer(actualProduce);
+					    newInteval.setFollowingWin(movieProducer.getYear());
+					    count++;
+					 }else if(count==2) {
+						 newInteval.setPreviousWin(movieProducer.getYear());
+						 intervalWins.add(newInteval);
+						 count=1;
+					 }
+				 }
+		   }
+		   
+		   
+		  IntervalDto max = intervalWins
+		     .stream()
+		     .max(Comparator.comparing(IntervalDto::getInterval))
+		     .get();
+		   
+		
+		  IntervalDto min = intervalWins
+				     .stream()
+				     .min(Comparator.comparing(IntervalDto::getInterval))
+				     .get();
+				  
+		  		  
+		return new RangeAwardsDto(min, max);
+	}
+
+
+	@Override
+	public boolean removeMovie(int id) {
+		
+		Movie movie = _movieRepository.getById(id);
+		
+		if(!movie.isWinner()) {
+			_movieRepository.remove(movie);
+			return true;
+		}
+		
+		return false;
 	}
 
 	

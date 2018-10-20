@@ -64,6 +64,21 @@ public class MovieMemoryRepository implements IMovieMemoryRepository {
 	            .collect(Collectors.toList());
 
 	}
+
+
+	@Override
+	public Movie getById(int id) {
+		return this.database.stream()
+	               .filter(x-> x.getId()==id)
+                   .findFirst()
+                   .get();
+   }
+
+
+	@Override
+	public void remove(Movie movie) {
+		this.database.remove(movie);
+	}
 	
 
 }
