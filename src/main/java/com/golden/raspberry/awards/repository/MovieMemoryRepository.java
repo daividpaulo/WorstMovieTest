@@ -2,6 +2,7 @@ package com.golden.raspberry.awards.repository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,7 +27,15 @@ public class MovieMemoryRepository implements IMovieMemoryRepository {
 	@Override
 	public Movie save(Movie newMovie) {
 		
-		this.database.add(newMovie);
+	 int nextId =	this.database
+		   .stream()
+		   .max(Comparator.comparing(Movie::getId))
+		   .get().getId() + 1;
+		
+	    newMovie.setId(nextId);
+		
+	    this.database.add(newMovie);
+		
 		return newMovie;
 		
 	}
@@ -78,6 +87,22 @@ public class MovieMemoryRepository implements IMovieMemoryRepository {
 	@Override
 	public void remove(Movie movie) {
 		this.database.remove(movie);
+	}
+
+
+	@Override
+	public Movie update(Movie movie) {
+	    
+	  Movie obsoletMovie = this.database
+		     .stream()
+		     .filter(x->x.getId()==movie.getId())
+		     .findFirst()
+		     .get();
+		
+		this.database.remove(obsoletMovie);
+		this.database.add(movie);
+		
+		return movie;
 	}
 	
 

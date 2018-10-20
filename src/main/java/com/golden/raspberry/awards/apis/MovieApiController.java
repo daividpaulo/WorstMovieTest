@@ -41,12 +41,12 @@ public class MovieApiController {
 	 
 	@PostMapping(path="")
 	public Movie addNew(Movie movie) {
-		return movie;
+		return _service.save(movie);
 	}
 	
 	@PutMapping(path="")
 	public Movie updateMovie(Movie movie) {
-		return movie;
+		return _service.update(movie);
 	}
 	
 	//1. Obter o(s) vencedor(es), informando um ano;

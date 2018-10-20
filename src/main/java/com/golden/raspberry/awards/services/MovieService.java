@@ -187,6 +187,18 @@ public class MovieService implements IMovieService {
 		return false;
 	}
 
+
+	@Override
+	public Movie save(Movie movie) {
+		return _movieRepository.save(movie);
+	}
+
+
+	@Override
+	public Movie update(Movie movie) {
+		return _movieRepository.update(movie);
+	}
+
 	
 	
 }

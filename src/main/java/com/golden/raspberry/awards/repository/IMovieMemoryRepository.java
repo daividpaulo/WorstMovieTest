@@ -20,6 +20,8 @@ public interface IMovieMemoryRepository {
 	public Movie getById(int id);
 
 	public void remove(Movie movie);
+
+	public Movie update(Movie movie);
 	
 	
 	

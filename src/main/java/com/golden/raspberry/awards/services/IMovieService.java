@@ -20,5 +20,9 @@ public interface IMovieService {
 	public RangeAwardsDto getBetterAndWorseProducer();
 
 	public boolean removeMovie(int id);
+
+	public Movie save(Movie movie);
+
+	public Movie update(Movie movie);
 	
 }
