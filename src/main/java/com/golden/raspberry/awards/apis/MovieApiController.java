@@ -79,7 +79,7 @@ public class MovieApiController {
    
 	// 5. Excluir um filme. Não deve permitir excluir vencedores.
 	@DeleteMapping(path="{id}") 
-	public boolean removeMovie(int id) {
+	public boolean removeMovie(@PathVariable int id) {
     	 return _service.removeMovie(id);
     }
 	
