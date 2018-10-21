@@ -2,23 +2,16 @@ package com.golden.raspberry.awards.apis;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.golden.raspberry.awards.domain.*;
+import com.golden.raspberry.awards.domain.Movie;
 import com.golden.raspberry.awards.dtos.RangeAwardsDto;
 import com.golden.raspberry.awards.dtos.StudioDto;
 import com.golden.raspberry.awards.dtos.YearDto;
@@ -32,10 +25,14 @@ public class MovieApiController {
 	private IMovieService _service;
 	
 	
-	// @ResponseStatus(code = HttpStatus.OK)
 	 @GetMapping(path = "")
 	 public List<Movie> getAllMovie(){
  		   return _service.getAll();
+	 }
+	
+	 @GetMapping(path ="/{id}")
+	 public Movie getById(@PathVariable int id){
+ 		   return _service.get(id);
 	 }
 	
 	 

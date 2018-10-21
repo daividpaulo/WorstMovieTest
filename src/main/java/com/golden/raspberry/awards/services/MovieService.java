@@ -199,6 +199,13 @@ public class MovieService implements IMovieService {
 		return _movieRepository.update(movie);
 	}
 
+
+	@Override
+	public Movie get(int id) {
+		
+		return _movieRepository.getById(id);
+	}
+
 	
 	
 }

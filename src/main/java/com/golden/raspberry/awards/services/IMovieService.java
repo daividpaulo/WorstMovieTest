@@ -24,5 +24,7 @@ public interface IMovieService {
 	public Movie save(Movie movie);
 
 	public Movie update(Movie movie);
+
+	public Movie get(int id);
 	
 }
