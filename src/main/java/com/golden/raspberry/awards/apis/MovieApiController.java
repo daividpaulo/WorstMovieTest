@@ -46,9 +46,7 @@ public class MovieApiController {
 		return _service.update(movie);
 	}
 	
-	
-	
-	
+		
 	//1. Obter o(s) vencedor(es), informando um ano;
 	 @GetMapping(path = "/winners/{year}")
 	 public List<Movie> getWinnerMoviesByYear(@PathVariable int year){
@@ -78,7 +76,6 @@ public class MovieApiController {
 		
    
 	// 5. Excluir um filme. Não deve permitir excluir vencedores.
-	
 	@DeleteMapping(path="{id}") 
 	public boolean removeMovie(@PathVariable int id) {
     	 return _service.removeMovie(id);

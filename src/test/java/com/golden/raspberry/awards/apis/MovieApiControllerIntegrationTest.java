@@ -4,14 +4,9 @@ package com.golden.raspberry.awards.apis;
 import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
@@ -19,30 +14,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.w3c.dom.NameList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.golden.raspberry.awards.domain.Movie;
-import com.golden.raspberry.awards.services.IMovieService;
-
-
-
-
 
 @RunWith(SpringRunner.class) 
 @WebMvcTest(MovieApiController.class)
 public class MovieApiControllerIntegrationTest {
 
-	
-	
     @Autowired
     private MockMvc mvc;
 	 
@@ -50,10 +36,7 @@ public class MovieApiControllerIntegrationTest {
 	
 	@Before
 	public void setUp() {
-
 		LoadMovies();
-			 
-	  
 	}
 	
 	private void LoadMovies() {
@@ -79,6 +62,7 @@ public class MovieApiControllerIntegrationTest {
 
 	}
 	
+	
 	@Test
 	public void testGetAllMovie() {
 
@@ -88,12 +72,11 @@ public class MovieApiControllerIntegrationTest {
 					  get("/movies")
 					   .contentType(MediaType.APPLICATION_JSON))
 					   .andExpect(status().isOk())
-					   .andExpect(jsonPath("$", Matchers.hasSize(196)));
+					   .andExpect(jsonPath("$",  Matchers.hasSize(allMovies.size())));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	    
 	}
 
 	@Test
