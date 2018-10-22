@@ -206,6 +206,12 @@ public class MovieService implements IMovieService {
 		return _movieRepository.getById(id);
 	}
 
+
+	@Override
+	public List<Movie> GetAllWinner() {
+		return _movieRepository.getAllWinnerMovies();
+	}
+
 	
 	
 }

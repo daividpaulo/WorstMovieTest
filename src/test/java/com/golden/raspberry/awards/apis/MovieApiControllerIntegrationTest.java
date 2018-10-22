@@ -4,20 +4,36 @@ package com.golden.raspberry.awards.apis;
 import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.w3c.dom.NameList;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.golden.raspberry.awards.domain.Movie;
 import com.golden.raspberry.awards.services.IMovieService;
+
+
 
 
 
@@ -30,14 +46,38 @@ public class MovieApiControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 	 
-	@Autowired
-	private IMovieService _service;
-	
+    private  List<Movie> allMovies;
 	
 	@Before
 	public void setUp() {
+
+		LoadMovies();
+			 
+	  
 	}
 	
+	private void LoadMovies() {
+		
+		try {
+			MvcResult	mvcResult = mvc.perform(
+				     get("/movies")
+			 	    .contentType(MediaType.APPLICATION_JSON))
+					.andReturn();
+		   
+			MockHttpServletResponse response = mvcResult.getResponse();
+ 		   String lista = response.getContentAsString();
+
+ 		   ObjectMapper mapper = new ObjectMapper();
+ 		   
+ 		  allMovies = mapper.readValue(lista, new TypeReference<List<Movie>>(){});
+  		 
+ 		  
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+
+	}
 	
 	@Test
 	public void testGetAllMovie() {
@@ -53,8 +93,6 @@ public class MovieApiControllerIntegrationTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-				    
-				
 	    
 	}
 
@@ -88,23 +126,41 @@ public class MovieApiControllerIntegrationTest {
 		fail("Not yet implemented");
 	}
 
+	
+	
 	@Test
-	public void testRemoveMovie() {
+	public void testRemoveWinnerMovie() {
 		
 		try {
-		
+	
+			int idWinnerMovie = allMovies.stream().filter(x->x.isWinner()).findFirst().get().getId();
+			
 			mvc.perform(
-			     delete("/movies/2")
+			     delete("/movies/" + idWinnerMovie)
+		 	    .contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", Matchers.is(false)));
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Test
+	public void testRemoveNotWinnerMovie() {
+		
+		try {
+	
+			int idWinnerMovie = allMovies.stream().filter(x-> !x.isWinner()).findFirst().get().getId();
+			
+			mvc.perform(
+			     delete("/movies/" + idWinnerMovie)
 		 	    .contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", Matchers.is(true)));
 		
-			
-			 mvc.perform(
-					  get("/movies")
-					   .contentType(MediaType.APPLICATION_JSON))
-					   .andExpect(status().isOk())
-					   .andExpect(jsonPath("$", Matchers.hasSize(195)));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

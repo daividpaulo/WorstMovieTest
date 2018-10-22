@@ -26,5 +26,7 @@ public interface IMovieService {
 	public Movie update(Movie movie);
 
 	public Movie get(int id);
+
+	public List<Movie> GetAllWinner();
 	
 }

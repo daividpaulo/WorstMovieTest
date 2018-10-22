@@ -11,6 +11,7 @@ public class GoldenRaspberryAwardsApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		
 	}
 
 }
