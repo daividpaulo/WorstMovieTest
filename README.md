@@ -42,3 +42,7 @@ Como Executar API
 
 > mvn spring-boot:run
 
+Como Executar Testes
+
+> mvn test
+
