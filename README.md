@@ -27,9 +27,6 @@ Save New Movie
 4. Obter o produtor com maior intervalo entre dois prêmios, e o que obteve dois	prêmios mais rápido;
 > [httpGet] /movies/producer/betterandworse
 
-4. Obter o produtor com maior intervalo entre dois prêmios, e o que obteve dois	prêmios mais rápido;
-> [httpGet] /movies/producer/betterandworse
-
 5. Excluir um filme. Não deve permitir excluir vencedores.
 > [httpDelete] /movies
 
