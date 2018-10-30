@@ -9,6 +9,10 @@ public class YearDto {
 
 	private List<YearWinnerDto> years;
 
+	public YearDto() {
+		
+	}
+	
 	public YearDto(List<YearWinnerDto> yearWinners) {
 		super();
 		this.years = yearWinners;

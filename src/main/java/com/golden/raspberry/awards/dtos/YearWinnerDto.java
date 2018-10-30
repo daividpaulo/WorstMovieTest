@@ -9,6 +9,10 @@ public class YearWinnerDto {
 	
 	private int winnerCount;
 
+	public YearWinnerDto() {
+		
+	}
+	
 	public YearWinnerDto(Integer year, int winnerCount) {
 		super();
 		this.year = year;

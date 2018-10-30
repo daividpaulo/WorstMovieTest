@@ -7,6 +7,10 @@ public class StudioDto {
 	private List<StudioWinnerDto> studios;
 
 	
+	public StudioDto() {
+		
+	}
+	
 	public StudioDto(List<StudioWinnerDto> studios) {
 		this.studios=studios;
 	}

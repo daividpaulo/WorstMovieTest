@@ -3,6 +3,11 @@ package com.golden.raspberry.awards.dtos;
 
 public class RangeAwardsDto {
   
+	
+	public RangeAwardsDto() {
+		
+	}
+	
 	private IntervalDto mim;
 	
 	private IntervalDto max;

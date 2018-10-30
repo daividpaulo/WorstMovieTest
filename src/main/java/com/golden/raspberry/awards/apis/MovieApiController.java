@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,12 +38,12 @@ public class MovieApiController {
 	
 	 
 	@PostMapping(path="")
-	public Movie addNew(Movie movie) {
+	public Movie addNew(@RequestBody Movie movie) {
 		return _service.save(movie);
 	}
 	
 	@PutMapping(path="")
-	public Movie updateMovie(Movie movie) {
+	public Movie updateMovie(@RequestBody Movie movie) {
 		return _service.update(movie);
 	}
 	

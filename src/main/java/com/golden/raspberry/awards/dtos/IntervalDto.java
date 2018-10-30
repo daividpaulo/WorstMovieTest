@@ -1,5 +1,9 @@
 package com.golden.raspberry.awards.dtos;
 
+import java.beans.Transient;
+
+import org.junit.Ignore;
+
 public class IntervalDto {
 
    private String producer;
@@ -18,6 +22,7 @@ public class IntervalDto {
 		this.producer = producer;
 	}
 
+	@Transient
 	public int getInterval() {
 		return (getFollowingWin() - getPreviousWin());
 	}

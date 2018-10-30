@@ -7,6 +7,9 @@ public class StudioWinnerDto {
 	
 	private Integer winCount;
 
+	public StudioWinnerDto() {
+		
+	}
 	
 	public StudioWinnerDto(String name, Integer winCount) {
 		super();
